@@ -266,6 +266,9 @@ button,.txtbtn{
     line-height: 1;
 }
 /*Widths*/
+.wifc{
+  width: fit-content;
+}
 .winh{
     width:inherit;
 }
@@ -370,7 +373,7 @@ button,.txtbtn{
     display: block;
  }
 /*Grid*/
-.grid,.grid2,.grid3,.grid3c,.grid3icon,.grid4icon,.grid2c,.grid2colum,.grid-flxc,.grid-4-2,.grid-4-2var{
+.grid,.grid2,.grid3,.grid3c,.grid3icon,.grid4icon,.grid2c,.grid2colum,.grid-flxc,.grid-3-1,.grid-4-2,.grid-5-2{
     display: grid;
 }
 .grid {
@@ -396,12 +399,14 @@ button,.txtbtn{
   grid-gap: .1em;
 }
 /*Desktop 4 col - Mob 2 col*/
-.grid-4-2 {
-    grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
-}
 
-.grid-4-2var {
+
+.grid-4-2,.grid-5-2 {
     grid-template-columns: repeat(auto-fill, minmax(min(22rem,45%), 1fr));
+}
+/*Mobil 1 columna*/
+.grid-3-1 {
+  grid-template-columns: repeat(auto-fill, minmax(min(22rem,100%), 1fr));
 }
  /* grid tarjeta fid */
  .grid3icon {
@@ -766,9 +771,10 @@ Max-witdh +usadas
     .fxd-resp,.flex-none,.d-resp{
       display: none;
     }
-    /*4columnas*/
-    .grid-4-2 {
-        grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
+    /*GRID*/
+    /*3columnas*/
+    .grid-5-2 {
+      grid-template-columns: repeat(auto-fit, minmax(13em, 1fr));
     }
     .grid3icon {
       grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
@@ -776,6 +782,7 @@ Max-witdh +usadas
     .grid3 {
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
+    
     .flex-c-resp{
       flex-direction: row;
     }
@@ -791,9 +798,10 @@ Max-witdh +usadas
     }
   }
   @media screen and (min-width: 1024px){
-    .pipi{
-        display: none;
+    .grid-4-2 {
+      grid-template-columns: repeat(auto-fill, minmax(min(15rem,45%), 1fr));
     }
+    
   }
     
   @media screen and (min-width: 1280px) {
@@ -805,6 +813,10 @@ Max-witdh +usadas
     }
      .flex-colum-r{
        flex-direction: column;  
+    }
+    /* grid */
+    .grid-4-2 {
+      grid-template-columns: repeat(auto-fill, minmax(min(16rem,45%), 1fr));
     }
   }
   @media screen and (min-width: 1536px) {
