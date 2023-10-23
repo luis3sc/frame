@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.nav{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.modal .backdrop{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all 0.1s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+.modal .modal-content{
+    background: #fff;
+    width: 100%;
+    min-height: 95%;
+    position: absolute;
+    z-index: 2;
+    border-radius: 15px 15px 0 0;
+    transition: all 0.3s ease-in-out;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -110%;
+}
+.modal.show-modal .backdrop{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal.show-modal .modal-content{
+    bottom: 0px;  
+}
+.closeModalBtn{
+    padding: 10px;
+    border-radius: 100%;
+    position: absolute;
+    right: 1em;
+    font-size: 1em;
+    top: 1em;
+}
+.modalcontenido{
+    padding: 1em;
+}
+    </style>
+</head>
+<body>
+    <div class="nav">
+    <button id="modalBtn1">Mostrar Modal 1</button>
+    <button id="modalBtn2">Mostrar Modal 2</button>
+    <button id="modalBtn3">Mostrar Modal 3</button>
+    <button id="modalBtn4">Mostrar Modal 4</button>
+    <button id="modalBtn5">Mostrar Modal 5</button>
+    <button id="modalBtn6">Mostrar Modal 6</button>
+    <button id="modalBtn7">Mostrar Modal 7</button>
+    </div>
+    <!-- Agrega botones para los otros modales -->
+
+    <div id="myModal1" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">X</button>
+            <div class="modalcontenido">
+                <p>Contenido del Modal 1 aquí.</p> 
+            </div>
+               
+        </div>
+    </div>
+    
+    <div id="myModal2" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">X</button>
+            <p>Contenido del Modal 2 aquí.</p>    
+        </div>
+    </div>
+    <div id="myModal3" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">Cerrar Modal</button>
+            <p>Contenido del Modal 2 aquí.</p>    
+        </div>
+    </div>
+    <div id="myModal4" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">Cerrar Modal</button>
+            <p>Contenido del Modal 2 aquí.</p>    
+        </div>
+    </div>
+    <div id="myModal5" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">Cerrar Modal</button>
+            <p>Contenido del Modal 2 aquí.</p>    
+        </div>
+    </div>
+    <div id="myModal6" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">Cerrar Modal</button>
+            <p>Contenido del Modal 2 aquí.</p>    
+        </div>
+    </div>
+    <div id="myModal7" class="modal">
+        <div class="backdrop"></div>
+        <div class="modal-content">
+            <button class="closeModalBtn">Cerrar Modal</button>
+            <p>Contenido del Modal 2 aquí.</p>    
+        </div>
+    </div>
+
+    <script>
+        const modalBtns = document.querySelectorAll('[id^="modalBtn"]');
+const modals = document.querySelectorAll('.modal');
+const closeModalBtns = document.querySelectorAll('.closeModalBtn');
+
+function mostrarModal(nombreModal) {
+    const modal = document.getElementById(nombreModal);
+    modal.classList.add('show-modal');
+}
+
+function cerrarModal(nombreModal) {
+    const modal = document.getElementById(nombreModal);
+    modal.classList.remove('show-modal');
+}
+
+modalBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        mostrarModal(`myModal${index + 1}`);
+    });
+});
+
+closeModalBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        cerrarModal(`myModal${index + 1}`);
+    });
+});
+
+
+    </script>
+</body>
+</html>
