@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Formulario de Evaluación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #question-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #answer-form {
+            margin-top: 20px;
+        }
+
+        #message {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question-container">
+            <h1>Pregunta <span id="question-number">1</span></h1>
+            <p id="question-text"></p>
+            <form id="answer-form">
+                
+                <input type="radio" name="answer" value="0">Respuesta 1<br>
+                <input type="radio" name="answer" value="0">Respuesta 2<br>
+                <input type="radio" name="answer" value="0">Respuesta 3<br>
+                <input type="radio" name="answer" value="0">Respuesta 4<br>
+                <button type="submit" id="next-btn">Siguiente</button>
+            </form>
+            <div id="countdown"></div>
+        </div>
+        <div id="message"></div>
+    </div>
+    <script>
+        const questions = [
+    "¿Cuántos días de anticipación se debe hacer un pedido de torta personalizada?",
+    "¿Cuál es el ingrediente principal de la masa de la torta?",
+    "¿Qué tipo de relleno es más común en las tortas personalizadas?",
+    "¿Qué accesorio es adecuado para decorar una torta de cumpleaños?",
+    "¿Cuál es la mejor manera de conservar una torta personalizada antes de servirla?",
+    "¿Cuál es la técnica adecuada para nivelar una torta antes de decorarla?",
+    "¿Qué tipo de glaseado es ideal para crear detalles precisos en una torta personalizada?",
+    "¿Qué se debe hacer en caso de que el cliente no esté satisfecho con la torta recibida?",
+    "¿Cuál es la forma correcta de transportar una torta personalizada para evitar daños?",
+    "¿Qué precauciones se deben tomar al trabajar con alérgenos comunes en las tortas?"
+];
+
+const options = [
+    ["A) 1 día", "B) 3 días", "C) 5 días", "D) 7 días"],
+    ["A) Harina", "B) Azúcar", "C) Leche", "D) Huevos"],
+    ["A) Chocolate", "B) Crema de mantequilla", "C) Frutas frescas", "D) Caramelo"],
+    ["A) Velas", "B) Flores naturales", "C) Juguetes pequeños", "D) Chispas de colores"],
+    ["A) Refrigerarla", "B) Congelarla", "C) Dejarla a temperatura ambiente", "D) Guardarla en una caja hermética"],
+    ["A) Usar un nivelador de tortas", "B) Cortarla con un cuchillo grande", "C) Dejarla tal como está", "D) Rellenar los huecos con glaseado"],
+    ["A) Glaseado de mantequilla", "B) Glaseado real", "C) Glaseado de queso crema", "D) Glaseado de chocolate"],
+    ["A) Reembolsar el dinero", "B) Ofrecer un descuento en el próximo pedido", "C) Ignorar la queja", "D) Pedir disculpas y ofrecer una solución"],
+    ["A) Colocarla en un asiento del coche", "B) Sujetarla firmemente en las manos", "C) Colocarla en una superficie plana y estable", "D) Dejarla en el maletero del coche"],
+    ["A) Utilizar utensilios y superficies separadas para evitar la contaminación cruzada", "B) No es necesario tomar precauciones", "C) Dejar que los clientes se sirvan ellos mismos", "D) Etiquetar los alérgenos solo si el cliente lo solicita"]
+];
+
+const correctAnswers = [1, 0, 1, 2, 0, 0, 1, 3, 2, 0];
+
+const questionText = document.getElementById("question-text");
+const questionNumber = document.getElementById("question-number");
+const answerForm = document.getElementById("answer-form");
+const nextButton = document.getElementById("next-btn");
+const message = document.getElementById("message");
+const countdown = document.getElementById("countdown");
+
+let currentQuestion = 0;
+let score = 0;
+let timer;
+
+function startQuiz() {
+    showQuestion();
+    startTimer();
+}
+
+function showQuestion() {
+    questionText.innerText = questions[currentQuestion];
+    questionNumber.innerText = currentQuestion + 1;
+    for (let i = 0; i < 4; i++) {
+        document.getElementsByTagName("input")[i].nextSibling.data = options[currentQuestion][i];
+    }
+}
+
+function startTimer() {
+    let timeLeft = 5;
+    countdown.innerText = timeLeft;
+    timer = setInterval(() => {
+        timeLeft--;
+        countdown.innerText = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            processAnswer(0); // Puntuación 0 si no se selecciona ninguna respuesta
+        }
+    }, 1000);
+}
+
+function processAnswer(answer) {
+    clearInterval(timer);
+    score += answer; // Suma la puntuación de la respuesta a la puntuación total
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        showQuestion();
+        startTimer(); // Reiniciar el temporizador para la siguiente pregunta
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    answerForm.style.display = "none";
+    let messageText = "";
+    if (score < 3) {
+        messageText = "Mensaje negativo";
+    } else if (score < 7) {
+        messageText = "Mensaje normal";
+    } else {
+        messageText = "Mensaje positivo";
+    }
+    message.innerText = messageText;
+}
+
+answerForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+    if (selectedAnswer) {
+        processAnswer(parseInt(selectedAnswer.value)); // Puntuación de la respuesta seleccionada
+    } else {
+        processAnswer(0); // Puntuación 0 si no se selecciona ninguna respuesta
+    }
+});
+
+startQuiz();
+
+    </script>
+</body>
+</html>
